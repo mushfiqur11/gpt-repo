@@ -1,0 +1,17 @@
+prompts:
+  - name: base
+    prompt: |
+      Complete the given text:
+
+  - name: translation
+    prompt: |
+      Translate the given text from English to Spanish:
+
+  - name: summarization
+    prompt: |
+      Summarize the given text:
+          
+  - name: simplification
+    prompt: |
+      Simplify the given text:
+      
