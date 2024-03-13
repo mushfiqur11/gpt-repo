@@ -1,5 +1,6 @@
 import yaml
 import pandas as pd
+import json
 
 def retrieve_yaml(filename, directory='.'):
     """
@@ -27,6 +28,8 @@ def get_api_key(api_key_path):
         api_key = f.read()
     return api_key
 
+def json_to_dict(json_response):
+    return json.loads(json_response)
 # print(retrieve_yaml('gpt_config.yaml'))
 # print(retrieve_prompt('gpt_prompt.yaml', prompt_name='base'))
 # print(retrieve_prompt('gpt_prompt.yaml'))
