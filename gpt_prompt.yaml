@@ -15,3 +15,13 @@ prompts:
     prompt: |
       Simplify the given text:
       
+  - name: ovsclassification
+    prompt: |
+      Classify the given text into one of the following categories:
+      - Simple
+      - Complex
+
+  - name: simpleprob
+    prompt: |
+      On a scale of 0 to 1, how simple is the given text? Give the response in a JSON format:
+      

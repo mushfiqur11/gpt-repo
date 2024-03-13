@@ -8,6 +8,12 @@ from utils import *
 #     messages = []
 #     return messages
 
+def calculate_cost(completion_token, prompt_token, unit_cost):
+    """
+    This function calculates the cost of the gpt response
+    """
+    return (3* completion_token + prompt_token) * unit_cost
+
 def formulate_gpt_prompt(messages, prompt):
     """
     This function formulates the gpt prompt for the given messages
@@ -35,7 +41,7 @@ def add_task(messages, task):
     messages.append({"role": "user", "content": task})
     return messages
 
-def get_gpt_response(gpt_config, prompt, task, samples=[], input_limit=10, verbose=False, full_response=False):
+def get_gpt_response(gpt_config, prompt, task, samples=[], input_limit=10, verbose=False, full_response=False, json_response=False, get_cost=True):
     """
     This function returns the gpt response for the given prompt
     """
@@ -53,10 +59,20 @@ def get_gpt_response(gpt_config, prompt, task, samples=[], input_limit=10, verbo
     if verbose:
         print(messages)
 
+    if json_response:
+        response_format = { "type": "json_object" }
+    else:
+        response_format = { "type": "string" }
     response = client.chat.completions.create(
         model=gpt_config["model"],
-        messages=messages
+        temperature=gpt_config["temperature"],
+        seed=gpt_config["seed"],
+        messages=messages,
+        response_format=response_format
     )
     if full_response:
         return response
+    if get_cost:
+        cost = calculate_cost(response.usage.completion_tokens, response.usage.prompt_tokens, gpt_config["unit_cost"])
+        return {"response": response.choices[0].message.content, "cost": cost}
     return response.choices[0].message.content

@@ -1,5 +1,7 @@
 model: gpt-4-turbo-preview
-unit_cost: 0.06
+unit_cost: 0.0001
 single_run_limit: 2
 temperature: 0.8
 key_path: OPENAI_API_KEY
+temperature: 0.8
+seed: 42
